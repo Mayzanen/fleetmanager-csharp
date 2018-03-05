@@ -1,0 +1,25 @@
+Eatech FleetManager
+
+"Oppimispäiväkirja"
+
+Maanantai:
+Kyselyt ei mene läpi jos tekee kyselyt suoraan palvelimelle vaan ne pitää ajaa IIS reverse proxyn läpi.
+(Palvelin: http://localhost:23341 IIS: http://localhost:56062/)
+
+Tämän jälkeen /api/car palautti kaksi kovakoodattua autoa. Lähdin kehittämään autojen datamodelia, kun tällä hetkellä niille oli annettu vain id ja mallin vuosi.
+
+"merkki, malli, rekisterinumero, vuosimalli, katsastuspäivämäärä, moottorin koko ja moottorin teho" > csv:n perusteella
+"make, model, registration, year, inspection date, engine size, engine power"
+
+Mietin hetken moottorin arvojen kanssa pitäisikö niistä alustaa inttejä vai doubleja. Kaikki csv:n arvot oli tasalukuja.
+Alkuun alustinkin ne inteiksi, mutta mietin ettei se ole realistista, kaikkian autojen arvot eivät oikeasti ole tasalukuja moottorin koossa tai tehossa. => doubleksi
+
+Car.cs ja CarDto.cs vastaamaan toisiaan. Kovakoodatuille autoille tarvittavat tiedot ja tarkistetaan kytkennän savun hälvettyä.
+
+Ei kaatunut, tuloksiakin saatiin, mutta ei kyllä tietoja silti oikein haettu. Tuloksissa nullia, nollaa ja day 1:stä. Vuosi ja id tulee edelleen oikein. Controllerille ehkä kannattaisi kertoa että palautetaas muuten nää loputkin tiedot...
+
+Yritys 2. tuotti järkeviä tuloksia. Sitten on tarkoituksena pystyttää oikea tietokanta, sylkeä csv sinne ja saada ohjelma keskustelemaan kannan kanssa.
+
+Ennen kannan pystyttämistä pyörsin päätökseni moottorin arvoista, palaankin int:teihin, tajusin että moottorin koko on cc, jonka jälkeen arvot voivat jo realistisesti olla kokonaislukuja.
+
+Aloin asentamaan MSMS:ää ja SQL Server 2017 Developer Editionia. Näiden jälkeen pistin päivän pulkkaan ja ensimmäinen commit.

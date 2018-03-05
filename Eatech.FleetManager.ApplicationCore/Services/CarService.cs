@@ -18,12 +18,24 @@ namespace Eatech.FleetManager.ApplicationCore.Services
             new Car
             {
                 Id = Guid.Parse("d9417f10-5c79-44a0-9137-4eba914a82a9"),
-                ModelYear = 1998
+                Make = "Make1",
+                Model = "Model2",
+                Registration = "JEA-313",
+                Year = 1998,
+                InspectionDate = DateTime.Now,
+                EngineSize = 3200,
+                EnginePower = 120,
             },
             new Car
             {
                 Id = Guid.NewGuid(),
-                ModelYear = 2007
+                Make = "Make2",
+                Model = "Model12",
+                Registration = "YIA-42",
+                Year = 2007,
+                InspectionDate = DateTime.Now,
+                EngineSize = 2200,
+                EnginePower = 67,
             }
         }.ToImmutableList();
 

@@ -27,7 +27,13 @@ namespace Eatech.FleetManager.Web.Controllers
             return (await _carService.GetAll()).Select(c => new CarDto
             {
                 Id = c.Id,
-                ModelYear = c.ModelYear
+                Make = c.Make,
+                Model = c.Model,
+                Registration = c.Registration,
+                Year = c.Year,
+                InspectionDate = c.InspectionDate,
+                EngineSize = c.EngineSize,
+                EnginePower = c.EnginePower
             });
         }
 
@@ -46,7 +52,13 @@ namespace Eatech.FleetManager.Web.Controllers
             return Ok(new CarDto
             {
                 Id = car.Id,
-                ModelYear = car.ModelYear
+                Make = car.Make,
+                Model = car.Model,
+                Registration = car.Registration,
+                Year = car.Year,
+                InspectionDate = car.InspectionDate,
+                EngineSize = car.EngineSize,
+                EnginePower = car.EnginePower
             });
         }
     }
