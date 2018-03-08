@@ -4,7 +4,7 @@ namespace Eatech.FleetManager.ApplicationCore.Entities
 {
     public class CarDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public string Make { get; set; }
 

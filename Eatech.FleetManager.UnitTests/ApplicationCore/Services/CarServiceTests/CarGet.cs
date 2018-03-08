@@ -24,7 +24,7 @@ namespace Eatech.FleetManager.UnitTests.ApplicationCore.Services.CarServiceTests
         public async void ExistingCardWithId()
         {
             ICarService carService = new CarService();
-            var carId = Guid.Parse("d9417f10-5c79-44a0-9137-4eba914a82a9");
+            var carId = 12;
 
             var car = await carService.Get(carId);
 
@@ -36,7 +36,7 @@ namespace Eatech.FleetManager.UnitTests.ApplicationCore.Services.CarServiceTests
         public async void NonExistingCardWithId()
         {
             ICarService carService = new CarService();
-            var carId = Guid.Parse("d9417f10-1111-1111-1111-4eba914a82a9");
+            var carId = 11;
 
             var car = await carService.Get(carId);
 

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Eatech.FleetManager.Web.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eatech.FleetManager.Web
 {
@@ -21,6 +23,9 @@ namespace Eatech.FleetManager.Web
         {
             services.AddMvc();
             services.AddScoped<ICarService, CarService>();
+
+            var connection = @"Server=localhost;Database=FleetManager;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddDbContext<FleetManagerContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

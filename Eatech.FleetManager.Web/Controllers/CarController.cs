@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Eatech.FleetManager.ApplicationCore.Entities;
 using Eatech.FleetManager.ApplicationCore.Interfaces;
+using Eatech.FleetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Eatech.FleetManager.Web.Controllers
 {
@@ -12,10 +14,12 @@ namespace Eatech.FleetManager.Web.Controllers
     public class CarController : Controller
     {
         private readonly ICarService _carService;
+        private readonly FleetManagerContext _context;
 
-        public CarController(ICarService carService)
+        public CarController(ICarService carService, FleetManagerContext context)
         {
             _carService = carService;
+            _context = context;
         }
 
         /// <summary>
@@ -24,7 +28,7 @@ namespace Eatech.FleetManager.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<CarDto>> Get()
         {
-            return (await _carService.GetAll()).Select(c => new CarDto
+            return (await _context.Cars.ToListAsync()).Select(c => new CarDto
             {
                 Id = c.Id,
                 Make = c.Make,
@@ -41,7 +45,7 @@ namespace Eatech.FleetManager.Web.Controllers
         ///     Example HTTP GET: api/car/570890e2-8007-4e5c-a8d6-c3f670d8a9be
         /// </summary>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(int id)
         {
             var car = await _carService.Get(id);
             if (car == null)
