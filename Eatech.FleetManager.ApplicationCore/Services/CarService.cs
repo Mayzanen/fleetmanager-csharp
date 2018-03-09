@@ -1,53 +1,86 @@
-﻿using System;
+﻿using Eatech.FleetManager.Web.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Eatech.FleetManager.ApplicationCore.Entities;
-using Eatech.FleetManager.ApplicationCore.Interfaces;
 
 namespace Eatech.FleetManager.ApplicationCore.Services
 {
-    public class CarService : ICarService
+    public class CarService
     {
-        /// <summary>
-        ///     Remove this. Temporary car storage before proper data storage is implemented.
-        /// </summary>
-        private static readonly ImmutableList<Car> TempCars;
-        //= new List<Car>
-        //{
-        //    new Car
-        //    {
-        //        Id = Guid.Parse("d9417f10-5c79-44a0-9137-4eba914a82a9"),
-        //        Make = "Make1",
-        //        Model = "Model2",
-        //        Registration = "JEA-313",
-        //        Year = 1998,
-        //        InspectionDate = DateTime.Now,
-        //        EngineSize = 3200,
-        //        EnginePower = 120,
-        //    },
-        //    new Car
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Make = "Make2",
-        //        Model = "Model12",
-        //        Registration = "YIA-42",
-        //        Year = 2007,
-        //        InspectionDate = DateTime.Now,
-        //        EngineSize = 2200,
-        //        EnginePower = 67,
-        //    }
-        //}.ToImmutableList();
+        private readonly FleetManagerContext _context;
 
-        public async Task<IEnumerable<Car>> GetAll()
+        public CarService(FleetManagerContext context)
         {
-            return await Task.FromResult(TempCars);
+            _context = context;
         }
 
-        public async Task<Car> Get(int id)
+        public async Task<Cars> Get(int id)
         {
-            return await Task.FromResult(TempCars.FirstOrDefault(c => c.Id == id));
+            var car = await _context.Cars.FirstOrDefaultAsync(x => x.Id == id);
+            return car;
+        }
+
+        public async Task<IEnumerable<Cars>> GetAll()
+        {
+            return (await _context.Cars.ToListAsync()).Select(c => new Cars
+            {
+                Id = c.Id,
+                Make = c.Make,
+                Model = c.Model,
+                Registration = c.Registration,
+                Year = c.Year,
+                InspectionDate = c.InspectionDate,
+                EngineSize = c.EngineSize,
+                EnginePower = c.EnginePower
+            });
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var car = await _context.Cars.FirstOrDefaultAsync(x => x.Id == id);
+            if (car == null)
+            {
+                return false;
+            }
+            _context.Cars.Remove(car);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<Cars> Update(int id, Cars updatedCar)
+        {
+            var car = await _context.Cars.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (car == null)
+            {
+                return car;
+            }
+
+            //Update
+            car.Make = updatedCar.Make;
+            car.Model = updatedCar.Model;
+            car.Registration = updatedCar.Registration;
+            car.Year = updatedCar.Year;
+            car.InspectionDate = updatedCar.InspectionDate;
+            car.EngineSize = updatedCar.EngineSize;
+            car.EnginePower = updatedCar.EnginePower;
+
+            _context.Cars.Update(car);
+            await _context.SaveChangesAsync();
+            return car;
+        }
+
+        public async Task<Cars> Create(Cars newCar)
+        {
+            _context.Cars.Add(newCar);
+            _context.SaveChanges();
+
+            // Return added car 
+            var car = await _context.Cars.FirstOrDefaultAsync(x => x.Registration == newCar.Registration);
+            return car;
         }
     }
 }

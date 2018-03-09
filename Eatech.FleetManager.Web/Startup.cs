@@ -1,9 +1,8 @@
-﻿using Eatech.FleetManager.ApplicationCore.Interfaces;
-using Eatech.FleetManager.ApplicationCore.Services;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Eatech.FleetManager.ApplicationCore.Services;
 using Eatech.FleetManager.Web.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +21,7 @@ namespace Eatech.FleetManager.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddScoped<ICarService, CarService>();
+            services.AddScoped<CarService>();
 
             var connection = @"Server=localhost;Database=FleetManager;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<FleetManagerContext>(options => options.UseSqlServer(connection));

@@ -19,7 +19,7 @@ namespace Eatech.FleetManager.Web.Models
             {
                 entity.ToTable("cars");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Make)
                     .IsRequired()

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Eatech.FleetManager.ApplicationCore.Entities;
-using Eatech.FleetManager.ApplicationCore.Interfaces;
+using Eatech.FleetManager.ApplicationCore.Services;
 using Eatech.FleetManager.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,57 +12,82 @@ namespace Eatech.FleetManager.Web.Controllers
     [Route("api/[controller]")]
     public class CarController : Controller
     {
-        private readonly ICarService _carService;
-        private readonly FleetManagerContext _context;
+        private readonly CarService _service;
 
-        public CarController(ICarService carService, FleetManagerContext context)
+        public CarController(CarService service)
         {
-            _carService = carService;
-            _context = context;
+            _service = service;
         }
 
         /// <summary>
         ///     Example HTTP GET: api/car
         /// </summary>
         [HttpGet]
-        public async Task<IEnumerable<CarDto>> Get()
+        public async Task<IEnumerable<Cars>> Get()
         {
-            return (await _context.Cars.ToListAsync()).Select(c => new CarDto
-            {
-                Id = c.Id,
-                Make = c.Make,
-                Model = c.Model,
-                Registration = c.Registration,
-                Year = c.Year,
-                InspectionDate = c.InspectionDate,
-                EngineSize = c.EngineSize,
-                EnginePower = c.EnginePower
-            });
+            return (await _service.GetAll());
         }
 
         /// <summary>
-        ///     Example HTTP GET: api/car/570890e2-8007-4e5c-a8d6-c3f670d8a9be
+        ///     Example HTTP GET: api/car/13
         /// </summary>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var car = await _carService.Get(id);
+            var car = await _service.Get(id);
             if (car == null)
             {
                 return NotFound();
             }
 
-            return Ok(new CarDto
+            return Ok(car);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (await _service.Delete(id)){
+                return Ok();
+            }
+            else{
+                return NotFound();
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Cars newValues)
+        {
+            if (newValues.Id != id || newValues == null)
             {
-                Id = car.Id,
-                Make = car.Make,
-                Model = car.Model,
-                Registration = car.Registration,
-                Year = car.Year,
-                InspectionDate = car.InspectionDate,
-                EngineSize = car.EngineSize,
-                EnginePower = car.EnginePower
-            });
+                return BadRequest();
+            }
+
+            var car = await _service.Update(id, newValues);
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(car);
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] Cars newCar)
+        {
+            if (newCar == null)
+            {
+                return BadRequest();
+            }
+
+            var car = await _service.Create(newCar);
+
+            if (car == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(car);
+            
         }
     }
 }

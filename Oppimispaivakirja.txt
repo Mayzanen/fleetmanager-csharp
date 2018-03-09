@@ -23,3 +23,22 @@ Yritys 2. tuotti järkeviä tuloksia. Sitten on tarkoituksena pystyttää oikea 
 Ennen kannan pystyttämistä pyörsin päätökseni moottorin arvoista, palaankin int:teihin, tajusin että moottorin koko on cc, jonka jälkeen arvot voivat jo realistisesti olla kokonaislukuja.
 
 Aloin asentamaan MSMS:ää ja SQL Server 2017 Developer Editionia. Näiden jälkeen pistin päivän pulkkaan ja ensimmäinen commit.
+
+Tiistai:
+Loin paikallisen tietokannan ja importtasin csv:n sinne suoraan SSMS:ssä Tasks: Import Flat File, katsoin että muuttujien tyypit olivat oikeita (olivat automaagisesti). Tämän jälkeen loin uuden käyttäjän toimimaan yhteyden ottoon VS kautta. Testasin toimiiko uusi käyttäjä. Perinteisesti unohdin sallia SQL Server Authentication moden ja hieman sai taas ihmetellä miksei juuri luodulla käyttäjälle saa kiinni.
+
+Huomasin, että olin tottunut käsittelemään .NET Framework projekteja ja Entity Framework ei toimi suoraan .NET Coressa.
+
+Torstai: 
+Tähän väliin ennenkuin teen enempää kannalla lisäsin sinne autoille id sarakkeen ja tein siitä primary keyn. Parantaa laajennettavuutta kun tulee kantaan useampi taulu jotka käyttävät autojen tietoja.
+
+https://docs.microsoft.com/en-us/ef/core/get-started/aspnetcore/existing-db
+
+Tuon ohjeen mukaan sain toimivan yhteyden kantaan ja /api/car palautti onnistuneesti kaikki 10k autoa.
+
+Perjantai:
+Tarinointi on jäänyt vähän vähemmälle, perus crud näytti jo toimivan, mutta autojen lisäämisessä huomasin ettei Id generoidukkaan ja 2. lisäyksen kohdalla aloin saamaan 500 vastaukseksi kun hajoaa tallentamisen yritykseen.
+
+Surullisen pitkän taistelun jälkeen selvisi, että olin tehnyt kannan Id:n vaan vammasesti ja se ei osannut päivittää asiaa.
+
+Testaamiset jää taas välistä, mutta ainakin nyt onnistuin luomaan tän hetken projektilla uuden auton joka sai uuden oman Id:n.
