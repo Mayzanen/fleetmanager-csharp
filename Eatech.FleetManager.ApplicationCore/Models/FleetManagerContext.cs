@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Eatech.FleetManager.Web.Models
+namespace Eatech.FleetManager.ApplicationCore.Models
 {
     public partial class FleetManagerContext : DbContext
     {

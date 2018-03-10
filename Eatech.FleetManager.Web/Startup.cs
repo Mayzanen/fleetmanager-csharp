@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Eatech.FleetManager.ApplicationCore.Services;
-using Eatech.FleetManager.Web.Models;
+using Eatech.FleetManager.ApplicationCore.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Eatech.FleetManager.Web

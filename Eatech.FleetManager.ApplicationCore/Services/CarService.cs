@@ -1,4 +1,4 @@
-﻿using Eatech.FleetManager.Web.Models;
+﻿using Eatech.FleetManager.ApplicationCore.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -81,6 +81,39 @@ namespace Eatech.FleetManager.ApplicationCore.Services
             // Return added car 
             var car = await _context.Cars.FirstOrDefaultAsync(x => x.Registration == newCar.Registration);
             return car;
+        }
+
+        public async Task<IEnumerable<Cars>> GetFilteredCars(Filters filters)
+        {
+            int minYear = 0;
+            int maxYear = 9999;
+
+            if (filters.MinYear != null)
+            {
+                minYear = filters.MinYear.Value;
+            }
+
+            if (filters.MaxYear != null)
+            {
+                maxYear = filters.MaxYear.Value;
+            }
+
+            return (await _context.Cars.Where( x => 
+                x.Year >= minYear && 
+                x.Year <= maxYear &&
+                (x.Make == filters.Make || string.IsNullOrEmpty(filters.Make)) &&
+                (x.Model == filters.Model || string.IsNullOrEmpty(filters.Model))
+                ).ToListAsync()).Select(c => new Cars
+            {
+                Id = c.Id,
+                Make = c.Make,
+                Model = c.Model,
+                Registration = c.Registration,
+                Year = c.Year,
+                InspectionDate = c.InspectionDate,
+                EngineSize = c.EngineSize,
+                EnginePower = c.EnginePower
+            });
         }
     }
 }

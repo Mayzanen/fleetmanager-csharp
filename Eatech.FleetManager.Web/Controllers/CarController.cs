@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Eatech.FleetManager.ApplicationCore.Services;
-using Eatech.FleetManager.Web.Models;
+using Eatech.FleetManager.ApplicationCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -63,6 +63,7 @@ namespace Eatech.FleetManager.Web.Controllers
             }
 
             var car = await _service.Update(id, newValues);
+
             if (car == null)
             {
                 return NotFound();
@@ -71,7 +72,7 @@ namespace Eatech.FleetManager.Web.Controllers
             return Ok(car);
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] Cars newCar)
         {
             if (newCar == null)
@@ -87,7 +88,16 @@ namespace Eatech.FleetManager.Web.Controllers
             }
 
             return Ok(car);
-            
+        }
+
+        [HttpPost("filteredCars")]
+        public async Task<IEnumerable<Cars>> GetFilteredCars([FromBody] Filters filters)
+        {
+            if (filters == null)
+            {
+                return (await _service.GetAll());
+            }
+            return (await _service.GetFilteredCars(filters));
         }
     }
 }

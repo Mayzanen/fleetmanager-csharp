@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Eatech.FleetManager.Web.Models
+namespace Eatech.FleetManager.ApplicationCore.Models
 {
-    public partial class Cars
+    public class Cars
     {
         public string Make { get; set; }
         public string Model { get; set; }
