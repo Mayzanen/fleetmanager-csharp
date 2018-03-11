@@ -43,6 +43,10 @@ namespace Eatech.FleetManager.Web.Controllers
             return Ok(car);
         }
 
+        /// <summary>
+        ///     Example HTTP DELETE: api/car/13
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -54,6 +58,12 @@ namespace Eatech.FleetManager.Web.Controllers
             }
         }
 
+        /// <summary>
+        ///     Example HTTP PUT: api/car/13 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newValues"></param>
+        /// <returns> Updated car </returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Cars newValues)
         {
@@ -72,6 +82,11 @@ namespace Eatech.FleetManager.Web.Controllers
             return Ok(car);
         }
 
+        /// <summary>
+        ///     Example HTTP POST: api/car
+        /// </summary>
+        /// <param name="newCar"></param>
+        /// <returns> New car </returns>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Cars newCar)
         {
@@ -90,6 +105,11 @@ namespace Eatech.FleetManager.Web.Controllers
             return Ok(car);
         }
 
+        /// <summary>
+        ///     Example HTTP POST: api/car/filteredCars
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns> Filtered cars </returns>
         [HttpPost("filteredCars")]
         public async Task<IEnumerable<Cars>> GetFilteredCars([FromBody] Filters filters)
         {

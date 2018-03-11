@@ -42,3 +42,9 @@ Tarinointi on jäänyt vähän vähemmälle, perus crud näytti jo toimivan, mut
 Surullisen pitkän taistelun jälkeen selvisi, että olin tehnyt kannan Id:n vaan vammasesti ja se ei osannut päivittää asiaa.
 
 Testaamiset jää taas välistä, mutta ainakin nyt onnistuin luomaan tän hetken projektilla uuden auton joka sai uuden oman Id:n.
+
+Lauantai:
+CRUD on toiminnassa. Myös autohaun filtteröinti toimii. Filtteröintiä varten tein luokan mikä ottaa kyselyn bodysta kiinni.
+
+Sunnuntai:
+Lisäsin Swaggerin, kirjotin README:n tutkin publishaamista.
